@@ -15,12 +15,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.example.tp_flashcard.ui.navigation.FlashcardNavHost
 import com.example.tp_flashcard.ui.theme.TP_FlashcardTheme
-import com.example.tp_flashcard.viewmodel.HomeViewModel
+import com.example.tp_flashcard.ui.home.HomeViewModel
 
 class MainActivity : ComponentActivity() {
     private val homeViewModel: HomeViewModel by viewModels()
