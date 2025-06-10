@@ -1,12 +1,14 @@
 <resources>
+    <!-- App Name -->
     <string name="app_name" translatable="false">Wiccards</string>
 
-    <!-- Catégories -->
+    <!-- Category -->
+    <string name="category_plantes">Plantes</string>
     <string name="category_lune">Phases de la lune</string>
     <string name="category_sabbats">Sabbats</string>
     <string name="category_symboles">Symboles ésotériques</string>
 
-    <!-- Cartes (questions et réponses) -->
+    <!-- Cards -->
     <string name="q_sauge">Quelle plante est utilisée pour la purification ?</string>
     <string name="a_sauge">La sauge blanche</string>
 
@@ -18,5 +20,8 @@
 
     <string name="q_pentacle">Que symbolise le pentacle ?</string>
     <string name="a_pentacle">Les 4 éléments + l’esprit, protégés par le cercle</string>
-    <string name="category_plantes">Plantes</string>
+
+    <!-- General UI -->
+    <string name="flashcard_next">Suivant</string>
+    <string name="flashcard_endsession">Session terminé !</string>
 </resources>
