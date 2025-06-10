@@ -1,3 +1,22 @@
 <resources>
-    <string name="app_name">TP_Flashcard</string>
+    <string name="app_name" translatable="false">Wiccards</string>
+
+    <!-- Catégories -->
+    <string name="category_lune">Phases de la lune</string>
+    <string name="category_sabbats">Sabbats</string>
+    <string name="category_symboles">Symboles ésotériques</string>
+
+    <!-- Cartes (questions et réponses) -->
+    <string name="q_sauge">Quelle plante est utilisée pour la purification ?</string>
+    <string name="a_sauge">La sauge blanche</string>
+
+    <string name="q_lune">Quelle phase lunaire est idéale pour la manifestation ?</string>
+    <string name="a_lune">La pleine lune</string>
+
+    <string name="q_samhain">Quel sabbat marque le Nouvel An Wiccan ?</string>
+    <string name="a_samhain">Samhain (31 octobre)</string>
+
+    <string name="q_pentacle">Que symbolise le pentacle ?</string>
+    <string name="a_pentacle">Les 4 éléments + l’esprit, protégés par le cercle</string>
+    <string name="category_plantes">Plantes</string>
 </resources>
