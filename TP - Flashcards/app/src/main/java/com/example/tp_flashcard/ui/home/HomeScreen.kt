@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.tp_flashcard.model.FlashCardCategory
 import com.example.tp_flashcard.R
@@ -44,6 +45,27 @@ fun HomeScreen(
             .height(100.dp)
             .padding(bottom = 24.dp)
         )
+
+        Text(
+            text = stringResource(R.string.home_welcome),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.headlineSmall,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+
+        Text(
+            text = stringResource(R.string.home_description),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+        )
+
+        Text(
+            text = stringResource(R.string.home_instruction),
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(top = 32.dp, bottom = 24.dp)
+        )
+
         CategoryList(categories, onCategoryClick)
     }
 }

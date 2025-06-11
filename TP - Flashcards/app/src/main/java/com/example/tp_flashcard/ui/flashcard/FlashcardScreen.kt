@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.tp_flashcard.R
 import com.example.tp_flashcard.viewmodel.FlashcardViewModel
@@ -180,11 +181,13 @@ fun Flashcard(
             if (!isBack) {
                 Text(
                     text = stringResource(id = questionResId),
+                    textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.headlineSmall
                 )
             } else {
                 Text(
                     text = stringResource(id = answerResId),
+                    textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier.graphicsLayer {
                         rotationY = 180f // <- Reverse Text

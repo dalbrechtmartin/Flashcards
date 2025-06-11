@@ -107,6 +107,11 @@
     <string name="a_roue_annee">La roue de l’année</string>
 
     <!-- General UI -->
+
+    <string name="home_welcome">✨ Bienvenue ✨</string>
+    <string name="home_description">Cette application vous aide à réviser et découvrir le monde de la Wicca à travers des cartes de révision : plantes, runes, symboles, et plus encore.</string>
+    <string name="home_instruction">Choisissez une catégorie ci-dessous pour commencer 👇</string>
+
     <string name="flashcard_progress">Carte %1$d / %2$d</string>
     <string name="flashcard_next">Suivant</string>
     <string name="flashcard_endsession">Session terminé !</string>
