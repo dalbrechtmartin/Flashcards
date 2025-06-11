@@ -1,7 +1,7 @@
 package com.example.tp_flashcard.ui.theme
 
+import android.content.Context
 import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -9,17 +9,18 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.edit
 
 private val DarkColorScheme = darkColorScheme(
     primary = White,
-    secondary = White,
-    tertiary = White
+    secondary = Black,
+    tertiary = Black
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Black,
-    secondary = Black,
-    tertiary = Black
+    secondary = White,
+    tertiary = White
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -34,7 +35,7 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun TP_FlashcardTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean,
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
@@ -52,4 +53,16 @@ fun TP_FlashcardTheme(
         typography = Typography,
         content = content
     )
+}
+
+fun saveThemePref(context: Context, darkTheme: Boolean) {
+    context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        .edit {
+            putBoolean("dark_theme", darkTheme)
+        }
+}
+
+fun loadThemePref(context: Context): Boolean {
+    return context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        .getBoolean("dark_theme", false)
 }

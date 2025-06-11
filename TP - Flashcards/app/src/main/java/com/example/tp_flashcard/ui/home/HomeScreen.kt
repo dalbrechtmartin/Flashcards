@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,6 +35,8 @@ import com.example.tp_flashcard.MainActivity
 import com.example.tp_flashcard.model.FlashCardCategory
 import com.example.tp_flashcard.R
 import com.example.tp_flashcard.viewmodel.setAppLocale
+import androidx.compose.material3.Switch
+import androidx.compose.foundation.layout.Row
 
 /**
  * Displays a screen with a list of flashcard categories.
@@ -44,19 +47,20 @@ import com.example.tp_flashcard.viewmodel.setAppLocale
 @Composable
 fun HomeScreen(
     categories: List<FlashCardCategory>,
-    onCategoryClick: (FlashCardCategory) -> Unit
+    onCategoryClick: (FlashCardCategory) -> Unit,
+    darkTheme: Boolean,
+    onThemeChange: (Boolean) -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
-    )
-    {
+    ) {
         AppLogo(
             modifier = Modifier
-            .height(100.dp)
-            .padding(bottom = 24.dp)
+                .height(100.dp)
+                .padding(bottom = 24.dp)
         )
 
         Text(
@@ -65,6 +69,10 @@ fun HomeScreen(
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.padding(bottom = 8.dp)
         )
+
+        // ThemeSelector(isDark = darkTheme, onThemeChange = onThemeChange)
+
+        Spacer(modifier = Modifier.height(8.dp))
 
         Text(
             text = stringResource(R.string.home_description),
@@ -160,5 +168,21 @@ fun LanguageSelector(context: Context) {
                 }) { Text(stringResource(R.string.dialog_language_english)) }
             }
         )
+    }
+}
+
+@Composable
+fun ThemeSelector(isDark: Boolean, onThemeChange: (Boolean) -> Unit) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
+        modifier = Modifier.padding(vertical = 8.dp)
+    ) {
+        Text("☀️", modifier = Modifier.padding(end = 8.dp))
+        Switch(
+            checked = isDark,
+            onCheckedChange = { onThemeChange(it) }
+        )
+        Text("🌙", modifier = Modifier.padding(start = 8.dp))
     }
 }

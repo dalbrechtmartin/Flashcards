@@ -24,7 +24,11 @@ import java.util.UUID
  *                     Categories are collected as state and passed to the HomeScreen.
  */
 @Composable
-fun FlashcardNavHost(homeViewModel: HomeViewModel) {
+fun FlashcardNavHost(
+    homeViewModel: HomeViewModel,
+    darkTheme: Boolean,
+    onThemeChange: (Boolean) -> Unit
+) {
     val navController = rememberNavController()
     val categories by homeViewModel.categories.collectAsState()
 
@@ -34,7 +38,9 @@ fun FlashcardNavHost(homeViewModel: HomeViewModel) {
                 categories = categories,
                 onCategoryClick = { category ->
                     navController.navigate("${NavRoutes.FLASHCARD}/${category.id}")
-                }
+                },
+                darkTheme = darkTheme,
+                onThemeChange = onThemeChange
             )
         }
         composable("${NavRoutes.FLASHCARD}/{categoryId}") { backStackEntry ->

@@ -17,9 +17,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.example.tp_flashcard.navigation.FlashcardNavHost
+import com.example.tp_flashcard.ui.home.ThemeSelector
 import com.example.tp_flashcard.ui.theme.TP_FlashcardTheme
+import com.example.tp_flashcard.ui.theme.loadThemePref
+import com.example.tp_flashcard.ui.theme.saveThemePref
 import com.example.tp_flashcard.viewmodel.HomeViewModel
 import java.util.Locale
 
@@ -39,8 +46,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        val isDark = loadThemePref(this)
         setContent {
-            TP_FlashcardTheme {
+            var darkTheme by remember { mutableStateOf(isDark) }
+            TP_FlashcardTheme(darkTheme = darkTheme) {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Column(
                         Modifier
@@ -49,7 +58,14 @@ class MainActivity : ComponentActivity() {
                             .consumeWindowInsets(innerPadding)
                             .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Vertical)),
                     ) {
-                        FlashcardNavHost(homeViewModel = homeViewModel)
+                        FlashcardNavHost(
+                            homeViewModel = homeViewModel,
+                            darkTheme = darkTheme,
+                            onThemeChange = { newTheme ->
+                                saveThemePref(this@MainActivity, newTheme)
+                                darkTheme = newTheme
+                            }
+                        )
                     }
                 }
             }
