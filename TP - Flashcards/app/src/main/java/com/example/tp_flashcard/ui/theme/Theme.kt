@@ -64,5 +64,5 @@ fun saveThemePref(context: Context, darkTheme: Boolean) {
 
 fun loadThemePref(context: Context): Boolean {
     return context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        .getBoolean("dark_theme", false)
+        .getBoolean("dark_theme", true)
 }
