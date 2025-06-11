@@ -35,13 +35,6 @@ fun FlashcardScreen(
         viewModel.loadFlashcardsForCategory(categoryId)
     }
 
-    if (uiState.isSessionFinished) {
-        LaunchedEffect(Unit) {
-            onSessionFinished()
-        }
-        return
-    }
-
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -49,40 +42,77 @@ fun FlashcardScreen(
         verticalArrangement = Arrangement.spacedBy(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        ProgressBar(
-            currentIndex = uiState.currentIndex,
-            total = uiState.flashcards.size
-        )
 
-        if (uiState.flashcards.isNotEmpty() && uiState.currentIndex < uiState.flashcards.size) {
+        if (uiState.isSessionFinished) {
+            ScoreDisplay(
+                correctAnswers = uiState.correctAnswers,
+                total = uiState.flashcards.size
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = onSessionFinished,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(stringResource(R.string.flashcard_return_home))
+            }
+
+        } else if (uiState.flashcards.isNotEmpty() && uiState.currentIndex < uiState.flashcards.size) {
+            ProgressBar(
+                currentIndex = uiState.currentIndex,
+                total = uiState.flashcards.size
+            )
+
             Flashcard(
                 questionResId = uiState.flashcards[uiState.currentIndex].questionResId,
                 answerResId = uiState.flashcards[uiState.currentIndex].answerResId,
                 showAnswer = showAnswer,
                 onCardClick = { showAnswer = !showAnswer }
             )
-        }
 
-        NextButton(
-            enabled = true,
-            onNextClick = {
-                showAnswer = false
-                viewModel.nextFlashcard()
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                DontKnowButton(
+                    onClick = {
+                        showAnswer = false
+                        viewModel.markWrongAndNext()
+                    },
+                    modifier = Modifier.weight(1f)
+                )
+                NextButton(
+                    onClick = {
+                        showAnswer = false
+                        viewModel.markCorrectAndNext()
+                    },
+                    modifier = Modifier.weight(1f)
+                )
             }
-        )
+        }
     }
 }
 
 @Composable
 fun ProgressBar(currentIndex: Int, total: Int) {
+    val displayIndex = (currentIndex + 1).coerceAtMost(total)
     val progress = if (total > 0) currentIndex.toFloat() / total else 0f
-    LinearProgressIndicator(
-        progress = { progress },
-        modifier = Modifier.fillMaxWidth(),
-    )
-    Spacer(modifier = Modifier.height(8.dp))
-    Text(text = "Carte ${currentIndex + 1} / $total")
+
+    Column {
+        LinearProgressIndicator(
+            progress = { progress },
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = stringResource(R.string.flashcard_progress, displayIndex, total),
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
 }
+
+
 
 @Composable
 fun Flashcard(
@@ -111,12 +141,32 @@ fun Flashcard(
 }
 
 @Composable
-fun NextButton(enabled: Boolean, onNextClick: () -> Unit) {
+fun ScoreDisplay(correctAnswers: Int, total: Int, modifier: Modifier = Modifier) {
+    Text(
+        text = stringResource(R.string.flashcard_score, correctAnswers, total),
+        style = MaterialTheme.typography.headlineMedium,
+        modifier = modifier
+    )
+}
+
+@Composable
+fun NextButton(onClick: () -> Unit, enabled: Boolean = true, modifier: Modifier = Modifier) {
     Button(
-        onClick = onNextClick,
+        onClick = onClick,
         enabled = enabled,
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
-        Text(text = stringResource(id = R.string.flashcard_next))
+        Text(text = stringResource(R.string.flashcard_next))
     }
 }
+
+@Composable
+fun DontKnowButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    Button(
+        onClick = onClick,
+        modifier = modifier.fillMaxWidth()
+    ) {
+        Text(text = stringResource(R.string.flashcard_dont_know))
+    }
+}
+

@@ -60,36 +60,29 @@ class FlashcardViewModel : ViewModel() {
     /**
      * Marks the current flashcard as correctly answered, increments the correct answer count,
      * advances to the next flashcard, and checks if the session is finished.
-     * 
-     * This function updates the UI state by:
-     * - Incrementing the count of correct answers
-     * - Moving to the next flashcard by incrementing the current index
-     * - Checking if all flashcards have been viewed and updating the session status accordingly
      */
     fun markCorrectAndNext() {
         _uiState.update { current ->
-            val isFinished = current.currentIndex + 1 >= current.flashcards.size
+            val nextIndex = current.currentIndex + 1
+            val sessionFinished = nextIndex >= current.flashcards.size
             current.copy(
+                currentIndex = nextIndex,
                 correctAnswers = current.correctAnswers + 1,
-                currentIndex = current.currentIndex + 1,
-                isSessionFinished = isFinished
+                isSessionFinished = sessionFinished
             )
         }
     }
 
     /**
      * Marks the current flashcard as answered incorrectly and advances to the next one.
-     * This function:
-     * - Increments the wrong answers counter by 1
-     * - Moves to the next flashcard by incrementing the current index
-     * - Updates the session status to finished if there are no more flashcards
      */
     fun markWrongAndNext() {
         _uiState.update { current ->
-            val isFinished = current.currentIndex + 1 >= current.flashcards.size
+            val nextIndex = current.currentIndex + 1
+            val isFinished = nextIndex >= current.flashcards.size
             current.copy(
                 wrongAnswers = current.wrongAnswers + 1,
-                currentIndex = current.currentIndex + 1,
+                currentIndex = nextIndex,
                 isSessionFinished = isFinished
             )
         }

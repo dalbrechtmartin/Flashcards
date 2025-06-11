@@ -107,6 +107,10 @@
     <string name="a_roue_annee">La roue de l’année</string>
 
     <!-- General UI -->
+    <string name="flashcard_progress">Carte %1$d / %2$d</string>
     <string name="flashcard_next">Suivant</string>
     <string name="flashcard_endsession">Session terminé !</string>
+    <string name="flashcard_dont_know">Je ne sais pas</string>
+    <string name="flashcard_score">Score : %1$d / %2$d</string>
+    <string name="flashcard_return_home">Retour à l’accueil</string>
 </resources>
