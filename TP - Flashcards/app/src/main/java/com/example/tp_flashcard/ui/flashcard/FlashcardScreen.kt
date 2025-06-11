@@ -50,25 +50,16 @@ fun FlashcardScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(32.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        ProgressBar(
-            currentIndex = uiState.currentIndex,
-            total = uiState.flashcards.size
-        )
-
-        if (uiState.isSessionFinished) {
-            ScoreDisplay(
-                correctAnswers = uiState.correctAnswers,
+        if (!uiState.isSessionFinished) {
+            ProgressBar(
+                currentIndex = uiState.currentIndex,
                 total = uiState.flashcards.size
             )
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = onSessionFinished, modifier = Modifier.fillMaxWidth()) {
-                Text(stringResource(R.string.flashcard_return_home))
-            }
-        } else {
+
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -100,13 +91,6 @@ fun FlashcardScreen(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                NextButton(
-                    onClick = {
-                        showAnswer = false
-                        viewModel.markCorrectAndNext()
-                    },
-                    modifier = Modifier.weight(1f)
-                )
                 DontKnowButton(
                     onClick = {
                         showAnswer = false
@@ -114,8 +98,25 @@ fun FlashcardScreen(
                     },
                     modifier = Modifier.weight(1f)
                 )
+                NextButton(
+                    onClick = {
+                        showAnswer = false
+                        viewModel.markCorrectAndNext()
+                    },
+                    modifier = Modifier.weight(1f)
+                )
             }
         }
+    }
+
+    if (uiState.isSessionFinished) {
+        ScoreDisplayDialog(
+            correctAnswers = uiState.correctAnswers,
+            total = uiState.flashcards.size,
+            onDismiss = {
+                onSessionFinished()
+            }
+        )
     }
 }
 
@@ -149,7 +150,7 @@ fun Flashcard(
     val density = LocalDensity.current.density
 
     val isBack = rotation.value >= 90f
-    val displayedText = if (isBack) answerResId else questionResId
+    if (isBack) answerResId else questionResId
 
     LaunchedEffect(showAnswer) {
         val target = if (showAnswer) 180f else 0f
@@ -196,11 +197,28 @@ fun Flashcard(
 }
 
 @Composable
-fun ScoreDisplay(correctAnswers: Int, total: Int, modifier: Modifier = Modifier) {
-    Text(
-        text = stringResource(R.string.flashcard_score, correctAnswers, total),
-        style = MaterialTheme.typography.headlineMedium,
-        modifier = modifier
+fun ScoreDisplayDialog(
+    correctAnswers: Int,
+    total: Int,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = {},
+        title = { Text(text = stringResource(R.string.flashcard_endsession)) },
+        text = {
+            Text(
+                stringResource(
+                    R.string.flashcard_score,
+                    correctAnswers,
+                    total
+                )
+            )
+        },
+        confirmButton = {
+            Button(onClick = onDismiss) {
+                Text(stringResource(R.string.flashcard_return_home))
+            }
+        }
     )
 }
 
