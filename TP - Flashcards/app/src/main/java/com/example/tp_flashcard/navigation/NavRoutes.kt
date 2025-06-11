@@ -1,4 +1,4 @@
-package com.example.tp_flashcard.ui.navigation
+package com.example.tp_flashcard.navigation
 
 object NavRoutes {
     const val HOME = "home"

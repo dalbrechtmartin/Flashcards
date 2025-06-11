@@ -16,9 +16,9 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.example.tp_flashcard.ui.navigation.FlashcardNavHost
+import com.example.tp_flashcard.navigation.FlashcardNavHost
 import com.example.tp_flashcard.ui.theme.TP_FlashcardTheme
-import com.example.tp_flashcard.ui.home.HomeViewModel
+import com.example.tp_flashcard.viewmodel.HomeViewModel
 
 class MainActivity : ComponentActivity() {
     private val homeViewModel: HomeViewModel by viewModels()

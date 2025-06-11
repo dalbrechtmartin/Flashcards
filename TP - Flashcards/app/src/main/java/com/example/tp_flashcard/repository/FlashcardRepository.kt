@@ -1,6 +1,8 @@
-package com.example.tp_flashcard.model
+package com.example.tp_flashcard.repository
 
 import com.example.tp_flashcard.R
+import com.example.tp_flashcard.model.FlashCard
+import com.example.tp_flashcard.model.FlashCardCategory
 
 object FlashcardRepository {
 

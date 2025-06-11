@@ -1,7 +1,8 @@
-package com.example.tp_flashcard.ui.flashcard
+package com.example.tp_flashcard.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.example.tp_flashcard.model.FlashcardRepository
+import com.example.tp_flashcard.repository.FlashcardRepository
+import com.example.tp_flashcard.ui.flashcard.FlashcardUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
