@@ -1,7 +1,4 @@
 <resources>
-    <!-- App Name -->
-    <string name="app_name" translatable="false">Wiccards</string>
-
     <!-- Category -->
     <string name="category_plantes">Plantes</string>
     <string name="category_lune">Phases de la lune</string>

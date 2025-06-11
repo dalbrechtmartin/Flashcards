@@ -41,23 +41,6 @@ class FlashcardViewModel : ViewModel() {
     }
 
     /**
-     * Advances to the next flashcard in the current session.
-     * 
-     * If there are no more flashcards to display (the current index would exceed the total number of cards),
-     * the session is marked as finished. Otherwise, the current index is incremented to point to the next flashcard.
-     */
-    fun nextFlashcard() {
-        val nextIndex = uiState.value.currentIndex + 1
-        val totalCards = uiState.value.flashcards.size
-
-        if (nextIndex >= totalCards) {
-            _uiState.update { it.copy(isSessionFinished = true) }
-        } else {
-            _uiState.update { it.copy(currentIndex = nextIndex) }
-        }
-    }
-
-    /**
      * Marks the current flashcard as correctly answered, increments the correct answer count,
      * advances to the next flashcard, and checks if the session is finished.
      */

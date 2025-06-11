@@ -1,0 +1,124 @@
+<resources>
+    <!-- Category -->
+    <string name="category_plantes">Plants</string>
+    <string name="category_lune">Moon Phases</string>
+    <string name="category_sabbats">Sabbats</string>
+    <string name="category_symboles">Esoteric Symbols</string>
+
+    <!-- Cards -->
+
+    <!-- Plants -->
+    <string name="q_sauge">Which plant is used for purification?</string>
+    <string name="a_sauge">White sage</string>
+    <string name="q_lavande">Which plant is used for relaxation and sleep?</string>
+    <string name="a_lavande">Lavender</string>
+    <string name="q_romarin">Which plant is associated with memory and protection?</string>
+    <string name="a_romarin">Rosemary</string>
+    <string name="q_menthe">Which plant is used for mental clarity?</string>
+    <string name="a_menthe">Mint</string>
+    <string name="q_camomille">Which plant promotes inner peace?</string>
+    <string name="a_camomille">Chamomile</string>
+    <string name="q_thym">Which plant is known for its purifying properties?</string>
+    <string name="a_thym">Thyme</string>
+    <string name="q_basilic">Which plant attracts luck and prosperity?</string>
+    <string name="a_basilic">Basil</string>
+    <string name="q_ortie">Which plant is used for strength and protection?</string>
+    <string name="a_ortie">Nettle</string>
+    <string name="q_achillee">Which plant promotes emotional healing?</string>
+    <string name="a_achillee">Yarrow</string>
+    <string name="q_aloes">Which plant is used for healing burns?</string>
+    <string name="a_aloes">Aloe</string>
+    <string name="q_rose">Which plant symbolizes love and beauty?</string>
+    <string name="a_rose">Rose</string>
+
+    <!-- Moon -->
+    <string name="q_lune">Which moon phase is ideal for manifestation?</string>
+    <string name="a_lune">Full moon</string>
+    <string name="q_lune_nouvelle">Which moon phase is associated with new beginnings?</string>
+    <string name="a_lune_nouvelle">New moon</string>
+    <string name="q_lune_croissante">Which phase promotes growth and expansion?</string>
+    <string name="a_lune_croissante">Waxing moon</string>
+    <string name="q_lune_gibbeuse">Which phase precedes the full moon?</string>
+    <string name="a_lune_gibbeuse">Gibbous moon</string>
+    <string name="q_lune_decroissante">Which phase is ideal for letting go?</string>
+    <string name="a_lune_decroissante">Waning moon</string>
+    <string name="q_lune_noire">Which phase symbolizes deep introspection?</string>
+    <string name="a_lune_noire">Dark moon</string>
+    <string name="q_lune_bleue">What do you call the second full moon in a single month?</string>
+    <string name="a_lune_bleue">Blue moon</string>
+    <string name="q_eclipse_lunaire">What phenomenon occurs when Earth comes between the Sun and the Moon?</string>
+    <string name="a_eclipse_lunaire">Lunar eclipse</string>
+    <string name="q_eclipse_solaire">What phenomenon occurs when the Moon comes between Earth and the Sun?</string>
+    <string name="a_eclipse_solaire">Solar eclipse</string>
+    <string name="q_lune_rouge">What is the full moon called during a total eclipse?</string>
+    <string name="a_lune_rouge">Blood moon or red moon</string>
+    <string name="q_lune_noire_signification">What does the dark moon symbolize in magic?</string>
+    <string name="a_lune_noire_signification">Transformation and the end of a cycle</string>
+
+    <!-- Sabbats -->
+    <string name="q_samhain">Which sabbat marks the Wiccan New Year?</string>
+    <string name="a_samhain">Samhain (October 31)</string>
+    <string name="q_yule">Which sabbat celebrates the winter solstice?</string>
+    <string name="a_yule">Yule</string>
+    <string name="q_imbolc">Which sabbat marks the return of light?</string>
+    <string name="a_imbolc">Imbolc</string>
+    <string name="q_ostara">Which sabbat celebrates the spring equinox?</string>
+    <string name="a_ostara">Ostara</string>
+    <string name="q_beltane">Which sabbat is associated with fertility and passion?</string>
+    <string name="a_beltane">Beltane</string>
+    <string name="q_litha">Which sabbat celebrates the summer solstice?</string>
+    <string name="a_litha">Litha</string>
+    <string name="q_lammas">Which sabbat marks the first harvest?</string>
+    <string name="a_lammas">Lammas (Lughnasadh)</string>
+    <string name="q_mabon">Which sabbat celebrates the autumn equinox?</string>
+    <string name="a_mabon">Mabon</string>
+    <string name="q_sabbat_printemps">Which sabbat symbolizes the rebirth of nature?</string>
+    <string name="a_sabbat_printemps">Ostara</string>
+    <string name="q_sabbat_ete">Which sabbat marks the peak of sunlight?</string>
+    <string name="a_sabbat_ete">Litha</string>
+    <string name="q_sabbat_automne">Which sabbat is associated with gratitude for harvests?</string>
+    <string name="a_sabbat_automne">Mabon</string>
+
+    <!-- Symboles -->
+    <string name="q_pentacle">What does the pentacle symbolize?</string>
+    <string name="a_pentacle">The 4 elements + spirit, protected by the circle</string>
+    <string name="q_triple_lune">What does the triple moon symbol represent?</string>
+    <string name="a_triple_lune">The three aspects of the Goddess: maiden, mother, crone</string>
+    <string name="q_ankh">Which Egyptian symbol represents eternal life?</string>
+    <string name="a_ankh">The Ankh</string>
+    <string name="q_triskel">Which Celtic symbol represents balance and movement?</string>
+    <string name="a_triskel">The triskelion</string>
+    <string name="q_oeil_horus">Which symbol protects from the evil eye in ancient Egypt?</string>
+    <string name="a_oeil_horus">The Eye of Horus</string>
+    <string name="q_arbre_vie">Which symbol connects the sky, earth, and underworld?</string>
+    <string name="a_arbre_vie">The Tree of Life</string>
+    <string name="q_rune_algiz">Which rune symbolizes protection?</string>
+    <string name="a_rune_algiz">Algiz</string>
+    <string name="q_trefle">Which plant symbol brings luck?</string>
+    <string name="a_trefle">Four-leaf clover</string>
+    <string name="q_main_fatima">Which symbol protects against evil in the Maghreb?</string>
+    <string name="a_main_fatima">The Hand of Fatima (Hamsa)</string>
+    <string name="q_croix_ansée">Which Egyptian symbol is also called the cross of life?</string>
+    <string name="a_croix_ansée">The Ankh</string>
+    <string name="q_roue_annee">Which symbol represents the cycle of seasons in Wicca?</string>
+    <string name="a_roue_annee">The Wheel of the Year</string>
+
+    <!-- General UI -->
+    <string name="change_language">Change language</string>
+
+    <string name="dialog_language_title">Choose language</string>
+    <string name="dialog_language_text">Select the app language.</string>
+    <string name="dialog_language_french">French</string>
+    <string name="dialog_language_english">English</string>
+
+    <string name="home_welcome">✨ Welcome ✨</string>
+    <string name="home_description">This app helps you review and discover the world of Wicca through flashcards: plants, runes, symbols, and more.</string>
+    <string name="home_instruction">Choose a category below to begin 👇</string>
+
+    <string name="flashcard_progress">Card %1$d / %2$d</string>
+    <string name="flashcard_next">Next</string>
+    <string name="flashcard_endsession">Session complete!</string>
+    <string name="flashcard_dont_know">I don\'t know</string>
+    <string name="flashcard_score">Score: %1$d / %2$d</string>
+    <string name="flashcard_return_home">Return home</string>
+</resources>
