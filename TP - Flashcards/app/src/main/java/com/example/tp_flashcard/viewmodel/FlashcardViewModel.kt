@@ -9,11 +9,27 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import java.util.UUID
 
+/**
+ * ViewModel responsible for managing flashcard-related operations and state.
+ * 
+ * This ViewModel:
+ * - Maintains the UI state for flashcard sessions
+ * - Loads flashcards filtered by category
+ * - Tracks progress through a study session including correct/wrong answers
+ * - Controls navigation between flashcards
+ * - Determines when a study session is complete
+ */
 class FlashcardViewModel : ViewModel() {
 
     private val _uiState = MutableStateFlow(FlashcardUiState())
     val uiState: StateFlow<FlashcardUiState> = _uiState.asStateFlow()
 
+    /**
+     * Loads all flashcards associated with the specified category.
+     * Updates the UI state with the filtered flashcards and resets the current index to 0.
+     *
+     * @param categoryId The UUID of the category whose flashcards should be loaded
+     */
     fun loadFlashcardsForCategory(categoryId: UUID) {
         val cards = FlashcardRepository.flashcards.filter {
             it.categoryId == categoryId
@@ -24,6 +40,12 @@ class FlashcardViewModel : ViewModel() {
         )
     }
 
+    /**
+     * Advances to the next flashcard in the current session.
+     * 
+     * If there are no more flashcards to display (the current index would exceed the total number of cards),
+     * the session is marked as finished. Otherwise, the current index is incremented to point to the next flashcard.
+     */
     fun nextFlashcard() {
         val nextIndex = uiState.value.currentIndex + 1
         val totalCards = uiState.value.flashcards.size
@@ -35,4 +57,41 @@ class FlashcardViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Marks the current flashcard as correctly answered, increments the correct answer count,
+     * advances to the next flashcard, and checks if the session is finished.
+     * 
+     * This function updates the UI state by:
+     * - Incrementing the count of correct answers
+     * - Moving to the next flashcard by incrementing the current index
+     * - Checking if all flashcards have been viewed and updating the session status accordingly
+     */
+    fun markCorrectAndNext() {
+        _uiState.update { current ->
+            val isFinished = current.currentIndex + 1 >= current.flashcards.size
+            current.copy(
+                correctAnswers = current.correctAnswers + 1,
+                currentIndex = current.currentIndex + 1,
+                isSessionFinished = isFinished
+            )
+        }
+    }
+
+    /**
+     * Marks the current flashcard as answered incorrectly and advances to the next one.
+     * This function:
+     * - Increments the wrong answers counter by 1
+     * - Moves to the next flashcard by incrementing the current index
+     * - Updates the session status to finished if there are no more flashcards
+     */
+    fun markWrongAndNext() {
+        _uiState.update { current ->
+            val isFinished = current.currentIndex + 1 >= current.flashcards.size
+            current.copy(
+                wrongAnswers = current.wrongAnswers + 1,
+                currentIndex = current.currentIndex + 1,
+                isSessionFinished = isFinished
+            )
+        }
+    }
 }

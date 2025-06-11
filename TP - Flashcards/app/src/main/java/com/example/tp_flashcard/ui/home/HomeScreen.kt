@@ -12,6 +12,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.tp_flashcard.model.FlashCardCategory
 
+/**
+ * Displays a screen with a list of flashcard categories.
+ *
+ * @param categories The list of flashcard categories to display
+ * @param onCategoryClick Callback function that is invoked when a category is clicked
+ */
 @Composable
 fun HomeScreen(
     categories: List<FlashCardCategory>,

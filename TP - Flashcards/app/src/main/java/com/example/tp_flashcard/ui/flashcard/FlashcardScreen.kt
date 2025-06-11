@@ -13,6 +13,14 @@ import com.example.tp_flashcard.R
 import com.example.tp_flashcard.viewmodel.FlashcardViewModel
 import java.util.UUID
 
+/**
+ * A composable that displays a flashcard study session for a specific category.
+ *
+ * @param categoryId The UUID of the category containing the flashcards to display
+ * @param viewModel The ViewModel that manages the flashcard session state
+ * @param onSessionFinished Callback invoked when the user has gone through all flashcards
+ * @param modifier Optional modifier for customizing the layout
+ */
 @Composable
 fun FlashcardScreen(
     categoryId: UUID,

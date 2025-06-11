@@ -4,6 +4,12 @@ import com.example.tp_flashcard.R
 import com.example.tp_flashcard.model.FlashCard
 import com.example.tp_flashcard.model.FlashCardCategory
 
+/**
+ * Repository for accessing flashcard data in the application.
+ * 
+ * This singleton object provides access to predefined flashcard categories and cards.
+ * It serves as a static data source for flashcard information within the application.
+ */
 object FlashcardRepository {
 
     // Available categories
