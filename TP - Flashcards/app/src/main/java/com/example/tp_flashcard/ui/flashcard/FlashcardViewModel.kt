@@ -5,6 +5,7 @@ import com.example.tp_flashcard.model.FlashcardRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import java.util.UUID
 
 class FlashcardViewModel : ViewModel() {
@@ -23,8 +24,14 @@ class FlashcardViewModel : ViewModel() {
     }
 
     fun nextFlashcard() {
-        val currentState = _uiState.value
-        val nextIndex = currentState.currentIndex + 1
-        _uiState.value = currentState.copy(currentIndex = nextIndex)
+        val nextIndex = uiState.value.currentIndex + 1
+        val totalCards = uiState.value.flashcards.size
+
+        if (nextIndex >= totalCards) {
+            _uiState.update { it.copy(isSessionFinished = true) }
+        } else {
+            _uiState.update { it.copy(currentIndex = nextIndex) }
+        }
     }
+
 }
