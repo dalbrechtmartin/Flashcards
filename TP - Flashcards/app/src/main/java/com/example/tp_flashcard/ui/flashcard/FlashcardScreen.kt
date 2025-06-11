@@ -1,17 +1,28 @@
 package com.example.tp_flashcard.ui.flashcard
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.tp_flashcard.R
 import com.example.tp_flashcard.viewmodel.FlashcardViewModel
-import java.util.UUID
+import kotlinx.coroutines.launch
+import java.util.*
 
 /**
  * A composable that displays a flashcard study session for a specific category.
@@ -21,6 +32,7 @@ import java.util.UUID
  * @param onSessionFinished Callback invoked when the user has gone through all flashcards
  * @param modifier Optional modifier for customizing the layout
  */
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun FlashcardScreen(
     categoryId: UUID,
@@ -28,7 +40,7 @@ fun FlashcardScreen(
     onSessionFinished: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val uiState = viewModel.uiState.collectAsState().value
+    val uiState by viewModel.uiState.collectAsState()
     var showAnswer by remember { mutableStateOf(false) }
 
     LaunchedEffect(categoryId) {
@@ -42,50 +54,63 @@ fun FlashcardScreen(
         verticalArrangement = Arrangement.spacedBy(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        ProgressBar(
+            currentIndex = uiState.currentIndex,
+            total = uiState.flashcards.size
+        )
 
         if (uiState.isSessionFinished) {
             ScoreDisplay(
                 correctAnswers = uiState.correctAnswers,
                 total = uiState.flashcards.size
             )
-
             Spacer(modifier = Modifier.height(16.dp))
-
-            Button(
-                onClick = onSessionFinished,
-                modifier = Modifier.fillMaxWidth()
-            ) {
+            Button(onClick = onSessionFinished, modifier = Modifier.fillMaxWidth()) {
                 Text(stringResource(R.string.flashcard_return_home))
             }
-
-        } else if (uiState.flashcards.isNotEmpty() && uiState.currentIndex < uiState.flashcards.size) {
-            ProgressBar(
-                currentIndex = uiState.currentIndex,
-                total = uiState.flashcards.size
-            )
-
-            Flashcard(
-                questionResId = uiState.flashcards[uiState.currentIndex].questionResId,
-                answerResId = uiState.flashcards[uiState.currentIndex].answerResId,
-                showAnswer = showAnswer,
-                onCardClick = { showAnswer = !showAnswer }
-            )
+        } else {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.Center
+            ) {
+                AnimatedContent(
+                    targetState = uiState.flashcards.getOrNull(uiState.currentIndex),
+                    transitionSpec = {
+                        (slideInHorizontally { width -> width } + fadeIn())
+                            .togetherWith(slideOutHorizontally { width -> -width } + fadeOut())
+                    },
+                    label = "CardSlide"
+                ) { targetFlashcard ->
+                    targetFlashcard?.let {
+                        Flashcard(
+                            questionResId = it.questionResId,
+                            answerResId = it.answerResId,
+                            showAnswer = showAnswer,
+                            onCardClick = {
+                                showAnswer = !showAnswer
+                            }
+                        )
+                    }
+                }
+            }
 
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                DontKnowButton(
-                    onClick = {
-                        showAnswer = false
-                        viewModel.markWrongAndNext()
-                    },
-                    modifier = Modifier.weight(1f)
-                )
                 NextButton(
                     onClick = {
                         showAnswer = false
                         viewModel.markCorrectAndNext()
+                    },
+                    modifier = Modifier.weight(1f)
+                )
+                DontKnowButton(
+                    onClick = {
+                        showAnswer = false
+                        viewModel.markWrongAndNext()
                     },
                     modifier = Modifier.weight(1f)
                 )
@@ -112,8 +137,6 @@ fun ProgressBar(currentIndex: Int, total: Int) {
     }
 }
 
-
-
 @Composable
 fun Flashcard(
     questionResId: Int,
@@ -121,22 +144,54 @@ fun Flashcard(
     showAnswer: Boolean,
     onCardClick: () -> Unit
 ) {
+    val rotation = remember { Animatable(0f) }
+    val scope = rememberCoroutineScope()
+    val density = LocalDensity.current.density
+
+    val isBack = rotation.value >= 90f
+    val displayedText = if (isBack) answerResId else questionResId
+
+    LaunchedEffect(showAnswer) {
+        val target = if (showAnswer) 180f else 0f
+        scope.launch {
+            rotation.animateTo(target, animationSpec = tween(durationMillis = 400))
+        }
+    }
+
     Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp)
-            .clickable { onCardClick() },
+            .fillMaxSize()
+            .clickable {
+                onCardClick()
+            }
+            .graphicsLayer {
+                rotationY = rotation.value
+                cameraDistance = 8 * density
+            },
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
     ) {
         Box(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
-            Text(
-                text = stringResource(id = if (showAnswer) answerResId else questionResId),
-                style = MaterialTheme.typography.headlineSmall
-            )
+            if (!isBack) {
+                Text(
+                    text = stringResource(id = questionResId),
+                    style = MaterialTheme.typography.headlineSmall
+                )
+            } else {
+                Text(
+                    text = stringResource(id = answerResId),
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.graphicsLayer {
+                        rotationY = 180f // <- Reverse Text
+                    }
+                )
+            }
         }
+
     }
 }
 
@@ -150,7 +205,7 @@ fun ScoreDisplay(correctAnswers: Int, total: Int, modifier: Modifier = Modifier)
 }
 
 @Composable
-fun NextButton(onClick: () -> Unit, enabled: Boolean = true, modifier: Modifier = Modifier) {
+fun NextButton(modifier: Modifier = Modifier, onClick: () -> Unit, enabled: Boolean = true) {
     Button(
         onClick = onClick,
         enabled = enabled,
@@ -169,4 +224,5 @@ fun DontKnowButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
         Text(text = stringResource(R.string.flashcard_dont_know))
     }
 }
+
 
